@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>name.taolei.zealot</groupId>
+  <artifactId>test</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>test-druid</module>
+    <module>test-transacion</module>
+    <module>test-thread</module>
+    <module>test-tomcat</module>
+    <module>test-dubbo-zookeeper</module>
+    <module>test-enum</module>
+    <module>test-enumClass</module>
+    <module>test-jvm</module>
+    <module>test-redis</module>
+  </modules>
+</project>

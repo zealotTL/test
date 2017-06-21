@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 优先级比propertes高 --> 
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="ConsoleLog" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH\:mm\:ss.SSS} [%p][%t][%c]%n%m%n" />
+		</layout>
+		<!--过滤器设置输出的级别 -->
+		<!-- <filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="debug" />
+			<param name="levelMax" value="warn" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter> -->
+	</appender>
+
+	<appender name="FileLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="../logs/web/web.log" /><!-- 设置日志输出文件名 -->
+		<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="Append" value="true" />
+		<param name="MaxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH\:mm\:ss} [%p][%t][%c]%n%m%n" />
+		</layout>
+	</appender>
+
+	<appender name="DailyFileLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="../logs/web/daily/web.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH\:mm\:ss} [%p][%t][%c]%n%m%n" />
+		</layout>
+	</appender>
+
+	<!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制 -->
+	<logger name="org.springframework" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+	<logger name="org.apache.shiro" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+	<!-- <logger name="org.apache.ibatis" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="ConsoleLog" />
+	</logger> -->
+	
+	<logger name="org.mybatis.spring.SqlSessionFactoryBean" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+	<logger name="org.apache.ibatis.io.ResolverUtil" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" additivity="true">
+		<level value="ERROR" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+	<logger name="org.springframework.web.filter.DelegatingFilterProxy" additivity="true">
+		<level value="ERROR" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</logger>
+
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="ConsoleLog" />
+		<appender-ref ref="FileLog" />
+		<appender-ref ref="DailyFileLog" />
+	</root>
+
+</log4j:configuration>
