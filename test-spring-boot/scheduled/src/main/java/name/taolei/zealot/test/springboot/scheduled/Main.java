@@ -1,6 +1,5 @@
 package name.taolei.zealot.test.springboot.scheduled;
 
-import name.taolei.zealot.test.springboot.event.TestEventPublish;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

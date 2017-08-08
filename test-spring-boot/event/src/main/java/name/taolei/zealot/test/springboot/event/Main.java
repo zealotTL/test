@@ -4,7 +4,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration @ComponentScan("name.taolei.zealot.test.springboot.event") public class Main {
+@Configuration
+@ComponentScan("name.taolei.zealot.test.springboot.event")
+public class Main {
 
     public static void main(String[] ags) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();

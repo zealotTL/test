@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration   scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>SpringBootLogback</contextName>
-    <property name="LOG_PATH" value="../logs/test"/>
-    <property name="APPDIR" value="test-spring-boot"/>
+    <!--test/test-spring-boot/logback-->
+    <property name="LOG_PATH" value="../logs/test/test-spring-boot"/>
+    <property name="APPDIR" value="logback"/>
+    <property name="alert" value="%yellow(at %class.%method \(%file:%line\)) "/>
 
-    <appender name="FileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/${APPDIR}/log_error.log</file>
+
+    <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APPDIR}/today.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/${APPDIR}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/${APPDIR}/log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>1MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -15,7 +18,7 @@
         </rollingPolicy>
         <append>true</append>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{10} Line:%-3L [ %msg ]%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-30.30logger{20} Line:%-3.3L - %msg %n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -25,9 +28,9 @@
         </filter>
     </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %thread %-5level %logger{10} Line:%-3L [ %msg ]%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-6.6thread %cyan(%-30.30logger{20}) Line:%boldRed(%-3.3L) - %black(%msg) %n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -35,11 +38,11 @@
         </filter>
     </appender>
 
-    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
     <logger name="name.taolei" level="DEBUG"/>
 
     <root level="DEBUG">
-        <appender-ref ref="FileError"/>
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FileAppender"/>
+        <appender-ref ref="ConsoleAppender"/>
     </root>
 </configuration>

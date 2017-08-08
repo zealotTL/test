@@ -10,7 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>name.taolei.zealot.test</groupId>
     <artifactId>test-spring-boot-el</artifactId>
+    <version>1.0.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
