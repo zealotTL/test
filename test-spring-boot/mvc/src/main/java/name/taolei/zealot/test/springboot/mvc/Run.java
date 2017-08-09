@@ -1,4 +1,4 @@
-package name.taolei.zealot.test.springboot.mybatis;
+package name.taolei.zealot.test.springboot.mvc;
 
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
@@ -8,7 +8,6 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 @SpringBootApplication(exclude = MybatisAutoConfiguration.class)
 public class Run extends SpringBootServletInitializer {
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Run.class);

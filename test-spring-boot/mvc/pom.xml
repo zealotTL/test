@@ -11,14 +11,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>name.taolei.zealot.test</groupId>
-    <artifactId>test-spring-boot-mybatis</artifactId>
+    <artifactId>test-spring-boot-mvc</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
-        <start-class>name.taolei.zealot.test.springboot.mybatis.Run</start-class>
+        <start-class>name.taolei.zealot.test.springboot.mvc.Run</start-class>
     </properties>
 
     <dependencies>

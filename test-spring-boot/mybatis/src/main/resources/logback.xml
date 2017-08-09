@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration   scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>SpringBootLogback</contextName>
+    <!--test/test-spring-boot/mybatis-->
+    <property name="LOG_PATH" value="../logs/test/test-spring-boot"/>
+    <property name="APPDIR" value="mybatis"/>
+    <!--点击跳转对应文件位置-->
+    <property name="alert" value="%yellow(at %class.%method \(%file:%line\)) "/>
+
+    <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APPDIR}/today.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APPDIR}/log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-30.30logger{20} Line:%-3.3L - %msg %n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-6.6thread %cyan(%logger) Line:%boldRed(%-3.3L) - %black(%msg) %n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <logger name="org.springframework" level="INFO"/>
+    <!--不显示SQL SESSION获取-->
+    <logger name="org.mybatis.spring" level="INFO"/>
+    <logger name="name.taolei" level="DEBUG"/>
+
+    <root level="DEBUG">
+        <appender-ref ref="FileAppender"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </root>
+</configuration>
