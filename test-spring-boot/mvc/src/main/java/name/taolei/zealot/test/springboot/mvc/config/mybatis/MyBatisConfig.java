@@ -1,4 +1,4 @@
-package name.taolei.zealot.test.springboot.mvc.config;
+package name.taolei.zealot.test.springboot.mvc.config.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

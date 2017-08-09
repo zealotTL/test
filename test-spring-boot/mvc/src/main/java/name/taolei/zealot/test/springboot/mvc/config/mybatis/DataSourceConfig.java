@@ -1,4 +1,4 @@
-package name.taolei.zealot.test.springboot.mvc.config;
+package name.taolei.zealot.test.springboot.mvc.config.mybatis;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

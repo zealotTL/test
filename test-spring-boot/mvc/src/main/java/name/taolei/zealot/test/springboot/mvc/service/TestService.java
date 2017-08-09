@@ -17,6 +17,6 @@ public class TestService {
         test.setA("asdf");
         testDao.update(test);
         test = testDao.getById(2);
-        return "OK";
+        return "index";
     }
 }
