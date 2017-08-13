@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="name.taolei.zealot.test.springboot.mybatises.mapper.master.MasterTestMapper">
+    <!-- 根据ID查询数据 -->
+    <select id="getById" parameterType="int" resultType="Test">
+        SELECT id,a
+        FROM test
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="Test">
+      UPDATE test set a = #{a} where id = #{id}
+    </update>
+</mapper>
