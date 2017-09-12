@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.security.PublicKey;
 
-@Configuration @ComponentScan("name.taolei.zealot.test.springboot.async") public class Main {
+@Configuration
+@ComponentScan("name.taolei.zealot.test.springboot.async")
+public class Main {
 
     public static void main(String[] ags) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
