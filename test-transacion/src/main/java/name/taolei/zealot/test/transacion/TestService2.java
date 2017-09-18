@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TestService2 {
     @Autowired
-    TestService testService;
+    private TestService testService;
+
+    public void test(){
+        testService.test();
+    }
 
     /**
      * 存在事物

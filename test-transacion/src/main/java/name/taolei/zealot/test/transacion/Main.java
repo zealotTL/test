@@ -19,5 +19,7 @@ public class Main {
         testService.test();//有事物
         testService.testThread();//无事物
         testService2.testThread();//有事物
+        testService.testThread2();//有事物
+        testService.testThread(testService);//有事物
     }
 }
