@@ -19,7 +19,7 @@
         <append>true</append>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-30.30logger{20} Line:%-3.3L - %msg %n</pattern>
-            <charset>utf-8</charset>
+            <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
@@ -31,7 +31,7 @@
     <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-6.6thread %cyan(%-30.30logger{20}) Line:%boldRed(%-3.3L) - %black(%msg) %n</pattern>
-            <charset>utf-8</charset>
+            <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>

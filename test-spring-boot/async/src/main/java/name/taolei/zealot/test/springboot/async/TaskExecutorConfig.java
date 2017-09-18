@@ -12,7 +12,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 public class TaskExecutorConfig implements AsyncConfigurer {
-    @Override public Executor getAsyncExecutor() {
+    public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setAllowCoreThreadTimeOut(false);
         threadPoolTaskExecutor.setCorePoolSize(10);
@@ -23,7 +23,7 @@ public class TaskExecutorConfig implements AsyncConfigurer {
         return threadPoolTaskExecutor;
     }
 
-    @Override public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return null;
     }
 }

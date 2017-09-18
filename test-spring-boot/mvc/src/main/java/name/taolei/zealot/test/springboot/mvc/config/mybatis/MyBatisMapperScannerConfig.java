@@ -13,7 +13,7 @@ public class MyBatisMapperScannerConfig {
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("name.taolei.zealot.test.springboot.mvc.dao");
+        mapperScannerConfigurer.setBasePackage("name.taolei.zealot.test.springboot.tsp.dao");
         mapperScannerConfigurer.setAnnotationClass(Mapper.class);
         return mapperScannerConfigurer;
     }
