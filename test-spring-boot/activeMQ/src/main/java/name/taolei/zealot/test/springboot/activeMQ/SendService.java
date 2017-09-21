@@ -17,9 +17,11 @@ public class SendService {
      */
     public void send(boolean fg) {
         if (fg) {
-            pubJmsTemplate.send("test-destination", new MyMessage());
+            pubJmsTemplate.setPubSubNoLocal(false);
+            pubJmsTemplate.send("test-queue", new MyMessage("queue"));
         } else {
-            subJmsTemplate.send("test-destination", new MyMessage());
+            pubJmsTemplate.setPubSubNoLocal(true);
+            subJmsTemplate.send("test-topic", new MyMessage("topic"));
         }
 
     }

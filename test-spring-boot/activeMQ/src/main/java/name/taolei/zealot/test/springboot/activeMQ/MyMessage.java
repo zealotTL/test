@@ -7,7 +7,13 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 public class MyMessage implements MessageCreator {
+    private String msg;
+
+    public MyMessage(String msg) {
+        this.msg = msg;
+    }
+
     public Message createMessage(Session session) throws JMSException {
-        return session.createTextMessage("测试消息");
+        return session.createTextMessage(msg);
     }
 }

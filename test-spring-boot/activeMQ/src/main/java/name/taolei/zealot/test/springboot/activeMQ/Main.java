@@ -7,7 +7,6 @@ import org.springframework.jms.annotation.EnableJms;
 
 @Configuration
 @ComponentScan("name.taolei.zealot.test.springboot.activeMQ")
-@EnableJms
 public class Main {
 
     public static void main(String[] ags) {

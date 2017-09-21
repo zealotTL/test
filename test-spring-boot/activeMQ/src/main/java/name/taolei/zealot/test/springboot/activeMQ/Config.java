@@ -2,23 +2,34 @@ package name.taolei.zealot.test.springboot.activeMQ;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQDestination;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
 import javax.naming.NamingException;
 
 import org.apache.activemq.jms.pool.PooledConnectionFactory;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
+import org.springframework.jms.support.converter.SimpleMessageConverter;
 import org.springframework.jms.support.destination.JndiDestinationResolver;
+import org.springframework.transaction.jta.JtaTransactionManager;
+
+import java.rmi.activation.ActivationDesc;
 
 @Configuration
+@EnableJms
 public class Config {
 
     @Bean
-    public ActiveMQConnectionFactory amqpConnectionFactory() {
+    public ActiveMQConnectionFactory activeMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL("tcp://localhost:61616");
         activeMQConnectionFactory.setUserName("admin");
@@ -31,44 +42,74 @@ public class Config {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
         cachingConnectionFactory.setTargetConnectionFactory(activeMQConnectionFactory);
         cachingConnectionFactory.setSessionCacheSize(100);
+        cachingConnectionFactory.setCacheConsumers(true);
+        cachingConnectionFactory.setCacheProducers(true);
         return cachingConnectionFactory;
+    }
+
+
+    @Bean
+    public SimpleMessageConverter simpleMessageConverter() {
+        SimpleMessageConverter simpleMessageConverter = new SimpleMessageConverter();
+        return simpleMessageConverter;
     }
 
     @Bean
     //队列消息
-    public JmsTemplate pubJmsTemplate(CachingConnectionFactory cachingConnectionFactory) {
-        return jmsTemplate(cachingConnectionFactory, false);
+    public JmsTemplate pubJmsTemplate(SimpleMessageConverter simpleMessageConverter,
+            CachingConnectionFactory cachingConnectionFactory) {
+        return jmsTemplate(simpleMessageConverter, cachingConnectionFactory, false, "test-queue");
     }
 
     @Bean
     //主题消息
-    public JmsTemplate subJmsTemplate(CachingConnectionFactory cachingConnectionFactory) {
-        return jmsTemplate(cachingConnectionFactory, true);
+    public JmsTemplate subJmsTemplate(SimpleMessageConverter simpleMessageConverter,
+            CachingConnectionFactory cachingConnectionFactory) {
+        return jmsTemplate(simpleMessageConverter, cachingConnectionFactory, true, "test-topic");
     }
 
-    private JmsTemplate jmsTemplate(CachingConnectionFactory cachingConnectionFactory, boolean pubSubDomain) {
+    private JmsTemplate jmsTemplate(SimpleMessageConverter simpleMessageConverter,
+            CachingConnectionFactory cachingConnectionFactory, boolean pubSubDomain, String destinationName) {
         JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory);
-        jmsTemplate.setDefaultDestinationName("test-destination");
+        jmsTemplate.setDefaultDestinationName(destinationName);
         // 主题（Topic）和队列消息
-        jmsTemplate.setPubSubDomain(true);
+//        jmsTemplate.setPubSubDomain(pubSubDomain);
+        jmsTemplate.setMessageConverter(simpleMessageConverter);
         return jmsTemplate;
     }
 
     @Bean
-    public JndiDestinationResolver destinationResolver(){
-        JndiDestinationResolver jndiDestinationResolver = new JndiDestinationResolver(){
-
-        }
-        return jndiDestinationResolver;
+    public MyMessageListener myMessageListener() {
+        return new MyMessageListener();
     }
 
     @Bean
-    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(
-            CachingConnectionFactory cachingConnectionFactory) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(cachingConnectionFactory);
-//        factory.setConcurrency("1-1");
+    public DefaultMessageListenerContainer topicDefaultMessageListenerContainer(
+            CachingConnectionFactory producerCachingConnectionFactory, MyMessageListener myMessageListener) {
+        return defaultMessageListenerContainer(producerCachingConnectionFactory, "test-topic", true, myMessageListener);
+    }
 
-        return factory;
+    @Bean
+    public DefaultMessageListenerContainer queueDefaultMessageListenerContainer(
+            CachingConnectionFactory producerCachingConnectionFactory, MyMessageListener myMessageListener) {
+        return defaultMessageListenerContainer(producerCachingConnectionFactory, "test-queue", false, myMessageListener);
+    }
+
+    private DefaultMessageListenerContainer defaultMessageListenerContainer(
+            CachingConnectionFactory cachingConnectionFactory, String destinationName, boolean pubSubDomain,
+            MyMessageListener myMessageListener) {
+        DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+        defaultMessageListenerContainer.setConnectionFactory(cachingConnectionFactory);
+        defaultMessageListenerContainer.setDestinationName(destinationName);
+        defaultMessageListenerContainer.setMessageListener(myMessageListener);
+        defaultMessageListenerContainer.setPubSubDomain(pubSubDomain);
+        return defaultMessageListenerContainer;
+    }
+
+    @Bean
+    public DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory(CachingConnectionFactory cachingConnectionFactory) {
+        DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
+        defaultJmsListenerContainerFactory.setConnectionFactory(cachingConnectionFactory);
+        return defaultJmsListenerContainerFactory;
     }
 }
