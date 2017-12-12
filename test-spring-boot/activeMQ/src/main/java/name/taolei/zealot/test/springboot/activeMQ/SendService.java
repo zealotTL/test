@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SendService {
-    @Autowired @Qualifier("pubJmsTemplate") JmsTemplate pubJmsTemplate;
-    @Autowired @Qualifier("subJmsTemplate") JmsTemplate subJmsTemplate;
+    @Autowired
+    @Qualifier("pubJmsTemplate")
+    JmsTemplate pubJmsTemplate;
+    @Autowired
+    @Qualifier("subJmsTemplate")
+    JmsTemplate subJmsTemplate;
 
     /**
      * 是否发送主体消息true/队列消息false

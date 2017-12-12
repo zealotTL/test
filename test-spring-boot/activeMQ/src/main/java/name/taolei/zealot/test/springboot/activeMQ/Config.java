@@ -1,28 +1,14 @@
 package name.taolei.zealot.test.springboot.activeMQ;
 
-import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.command.ActiveMQDestination;
-import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
-import javax.naming.NamingException;
-
-import org.apache.activemq.jms.pool.PooledConnectionFactory;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
-import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import org.springframework.jms.support.converter.SimpleMessageConverter;
-import org.springframework.jms.support.destination.JndiDestinationResolver;
-import org.springframework.transaction.jta.JtaTransactionManager;
-
-import java.rmi.activation.ActivationDesc;
 
 @Configuration
 @EnableJms
@@ -72,8 +58,6 @@ public class Config {
             CachingConnectionFactory cachingConnectionFactory, boolean pubSubDomain, String destinationName) {
         JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory);
         jmsTemplate.setDefaultDestinationName(destinationName);
-        // 主题（Topic）和队列消息
-//        jmsTemplate.setPubSubDomain(pubSubDomain);
         jmsTemplate.setMessageConverter(simpleMessageConverter);
         return jmsTemplate;
     }

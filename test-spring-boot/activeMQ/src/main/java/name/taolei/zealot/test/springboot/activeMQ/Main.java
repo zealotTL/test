@@ -3,7 +3,6 @@ package name.taolei.zealot.test.springboot.activeMQ;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
 
 @Configuration
 @ComponentScan("name.taolei.zealot.test.springboot.activeMQ")
