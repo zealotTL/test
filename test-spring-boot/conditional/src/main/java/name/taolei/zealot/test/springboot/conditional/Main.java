@@ -3,18 +3,20 @@ package name.taolei.zealot.test.springboot.conditional;
 import name.taolei.zealot.test.springboot.conditional.impl.LinuxTestService;
 import name.taolei.zealot.test.springboot.conditional.impl.WindowsTestService;
 import org.springframework.context.annotation.*;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration @ComponentScan("name.taolei.zealot.test.springboot.conditional") public class Main {
+@Configuration
+@ComponentScan("name.taolei.zealot.test.springboot.conditional")
+public class Main {
 
     @Bean
     @Conditional(WindowsCondition.class)
-    public TestService windowsTestService(){
+    public TestService windowsTestService() {
         return new WindowsTestService();
     }
+
     @Bean
     @Conditional(LinuxCondition.class)
-    public TestService linuxTestService(){
+    public TestService linuxTestService() {
         return new LinuxTestService();
     }
 
