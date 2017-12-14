@@ -1,18 +1,12 @@
 package name.taolei.zealot.test.springboot.mybatises.config.master;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:jdbc.properties")

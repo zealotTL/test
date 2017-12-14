@@ -21,10 +21,17 @@
             <pattern>%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-30.30logger{20} Line:%-3.3L - %msg %n</pattern>
             <charset>utf-8</charset>
         </encoder>
+        <!--不接受DEBUG级别日志-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--过滤条件-->
             <level>DEBUG</level>
+            <!--符合过滤条件的-->
             <onMatch>DENY</onMatch>
+            <!--不符合过滤条件的-->
             <onMismatch>ACCEPT</onMismatch>
+            <!--DENY 不做操作，停止-->
+            <!--ACCEPT 接受，停止-->
+            <!--NEUTRAL移交下一个appender-->
         </filter>
     </appender>
 

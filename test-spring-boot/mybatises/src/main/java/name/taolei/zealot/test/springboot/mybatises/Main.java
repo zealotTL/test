@@ -1,8 +1,6 @@
 package name.taolei.zealot.test.springboot.mybatises;
 
 import name.taolei.zealot.test.springboot.mybatises.service.TestService;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
