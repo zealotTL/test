@@ -10,6 +10,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd
 http://code.alibabatech.com/schema/dubbo
 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <dubbo:application name="supporter"/>
-    <dubbo:registry address="zookeeper://localhost:2181"/>
+    <dubbo:registry protocol="zookeeper" address="localhost:2181"/>
+    <dubbo:protocol name="dubbo" port="20880" />
     <dubbo:annotation package="name.taolei"/>
 </beans>

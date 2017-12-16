@@ -19,7 +19,7 @@
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 	<!-- import -->
-	<context:component-scan base-package="name.taolei">
-    </context:component-scan>
-	<import resource="spring/spring-dubbo-zookeeper-use.xml" />
+	<!--<context:component-scan base-package="name.taolei">-->
+    <!--</context:component-scan>-->
+	<!--<import resource="spring/spring-dubbo-zookeeper-user.xml" />-->
 </beans>

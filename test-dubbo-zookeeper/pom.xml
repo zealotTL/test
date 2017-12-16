@@ -8,7 +8,7 @@
     <version>1.0</version>
     <modules>
         <module>test-dubbo-zookeeper-core</module>
-        <module>test-dubbo-zookeeper-support</module>
+        <module>test-dubbo-zookeeper-supporter</module>
         <module>test-dubbo-zookeeper-user</module>
     </modules>
 </project>
