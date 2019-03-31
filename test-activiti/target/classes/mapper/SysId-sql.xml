@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="group.zealot.king.core.zt.mybatis.system.dao.mapper.SysIdDaoMapper">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="SysId">
+        insert into sys_id (INSERT_TIME)VALUES(#{insertTime})
+    </insert>
+
+    <select id="getMax" resultType="int">
+        select max(id) from sys_id
+    </select>
+</mapper>
