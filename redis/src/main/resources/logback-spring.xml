@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="alert" value="%yellow(at %class.%method \(%file:%line\)) "/>
+    <property name="log_path" value="./logs/web"/>
+    <property name="log_file_pattern" value="%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-50.50logger{50} Line:%-3.3L - %msg %n"/>
+    <property name="log_console_pattern" value="%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-15.15thread %cyan(%-60.60logger{60}) Line:%boldRed(%-3.3L) - %black(%msg) %n"/>
+    <property name="log_fileNamePattern" value="log.%d{yyyy-MM-dd}.%i.log"/>
+
+    <property name="log_prod_level" value="WARN"/>
+    <property name="log_test_level" value="DEBUG"/>
+    <property name="log_dev_level" value="DEBUG"/>
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${log_path}/today.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${log_path}/${log_fileNamePattern}</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>1MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <append>true</append>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${log_file_pattern}</pattern>
+                <charset>GBK</charset>
+            </encoder>
+        </appender>
+        <root level="${log_prod_level}">
+            <appender-ref ref="FileAppender"/>
+        </root>
+    </springProfile>
+
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${log_path}/today.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${log_path}/${log_fileNamePattern}</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>1MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <append>true</append>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${log_file_pattern}</pattern>
+                <charset>GBK</charset>
+            </encoder>
+        </appender>
+        <root level="${log_test_level}">
+            <appender-ref ref="FileAppender"/>
+        </root>
+    </springProfile>
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${log_console_pattern}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>DEBUG</level>
+            </filter>
+        </appender>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.apache.shiro" level="INFO"/>
+        <logger name="org.mybatis" level="INFO"/>
+        <logger name="org.apache.ibatis" level="INFO"/>
+        <logger name="org.springframework.aop.framework.CglibAopProxy" level="ERROR"/>
+        <root level="${log_dev_level}">
+            <appender-ref ref="ConsoleAppender"/>
+        </root>
+    </springProfile>
+</configuration>

@@ -1,4 +1,4 @@
-package name.taolei.zealot.test.jvm;
+package group.zealot.test.jvm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class OutOfMemoryMain {
      * -XX:SurvivorRatio=8
      */
     public static void outOfMemoryJavaHeapSpace() {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         while (true) {
             list.add(new Object());
         }
@@ -28,7 +28,7 @@ public class OutOfMemoryMain {
      * -XX:PermSize=10M -XX:MaxpermSize=10M
      */
     public static void outOfMemoryPermGenSpace() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         long i = 0;
         while (true) {
             list.add(String.valueOf(i++).intern());

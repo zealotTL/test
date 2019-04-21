@@ -1,21 +1,50 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>name.taolei.zealot</groupId>
+
+  <parent>
+    <groupId>group.zealot</groupId>
+    <artifactId>test</artifactId>
+    <version>1.0</version>
+  </parent>
+
   <artifactId>test-jvm</artifactId>
-  <version>1.0</version>
-  <name>test-jvm</name>
-  <url>http://maven.apache.org</url>
+  <name>${project.artifactId}</name>
+  <packaging>jar</packaging>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <skipTests>true</skipTests>
+    <mybatis.version>1.3.2</mybatis.version>
+    <mysql.version>8.0.11</mysql.version>
+    <mybatis-jsr310.version>1.0.2</mybatis-jsr310.version>
   </properties>
+
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.1.1.RELEASE</version>
+        <configuration>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

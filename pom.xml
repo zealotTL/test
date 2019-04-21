@@ -44,6 +44,8 @@
         <module>activemq</module>
         <module>druid</module>
         <module>thread</module>
+        <module>jvm</module>
+        <module>redis</module>
     </modules>
 
     <dependencyManagement>

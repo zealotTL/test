@@ -1,4 +1,4 @@
-package name.taolei.zealot.test.jvm;
+package group.zealot.test.jvm;
 
 public class StringInternMain {
     
