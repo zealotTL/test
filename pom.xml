@@ -42,6 +42,8 @@
 
     <modules>
         <module>activemq</module>
+        <module>druid</module>
+        <module>thread</module>
     </modules>
 
     <dependencyManagement>
