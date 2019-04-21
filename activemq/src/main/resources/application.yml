@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: dev
+  activemq:
+    user: zealot
+    password: zealot
+    broker-url: tcp://127.0.0.1:61616
+    in-memory: false
+    #必须使用连接池
+    pool:
+      #启用连接池
+      enabled: true
+      #连接池最大连接数
+      max-connections: 5
+      #空闲的连接过期时间，默认为30秒
+      idle-timeout: 30s
