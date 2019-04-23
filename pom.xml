@@ -38,6 +38,7 @@
         <module>jvm</module>
         <module>redis</module>
         <module>activity</module>
+        <module>dubbo</module>
     </modules>
 
     <dependencyManagement>
