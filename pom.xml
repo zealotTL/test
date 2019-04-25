@@ -39,6 +39,8 @@
         <module>redis</module>
         <module>activity</module>
         <module>dubbo</module>
+        <module>io</module>
+        <module>socket</module>
     </modules>
 
     <dependencyManagement>

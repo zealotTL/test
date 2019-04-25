@@ -1,22 +1,23 @@
-package name.taolei.zealot.test.tomcat.client;
+package group.zealot.test.socket.client;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service("httpClient")
+@Service
 public class HTTPClient {
-    
+
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     public void doGet(String host, int port, String uri) {
         Socket socket = null;
         try {
             socket = new Socket(host, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,7 +29,7 @@ public class HTTPClient {
         sb.append("User-Agent: HTTPClient\r\n");
         sb.append("Host: localhost:8080\r\n");
         sb.append("Connection: Keep-Alive\r\n");
-        
+
         OutputStream socketOut;
         try {
             socketOut = socket.getOutputStream();
@@ -36,23 +37,19 @@ public class HTTPClient {
             Thread.sleep(2000);
             InputStream socketIn = socket.getInputStream();
             int size = socketIn.available();
-            byte buffer[] = new byte[size];
+            byte[] buffer = new byte[size];
             socketIn.read(buffer);
-            System.out.println(new String(buffer));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.info("返回: \n" + new String(buffer));
+        } catch (IOException | InterruptedException e) {
+            logger.error("socket 连接读取 异常", e);
         } finally {
             if (socket != null && !socket.isClosed()) {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("socket.close() 异常", e);
                 }
             }
-            
         }
-        
     }
 }
