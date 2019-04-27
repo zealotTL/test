@@ -1,18 +1,16 @@
 package group.zealot.test.io.input;
 
-import group.zealot.test.io.Run;
-
-import java.io.*;
-import java.nio.file.Files;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 
 public class FileInput {
-    public static void main(String[] args) throws Exception {
-        try (InputStream in = Files.newInputStream(Run.path)) {
-            DataInput dataInput = new DataInputStream(in);
-            int i;
-            while ((i = dataInput.readInt()) != -1){
-                System.out.println(i);
-            }
-        }
+    public static void main(String[] args) {
+        byte[] bytes = {-26, -120, -112};
+        Charset cs = Charset.forName("UTF-8");
+        ByteBuffer bb = ByteBuffer.wrap(bytes);
+        CharBuffer cb = cs.decode(bb);
+        System.out.println(cb);
+        System.out.println("end");
     }
 }
