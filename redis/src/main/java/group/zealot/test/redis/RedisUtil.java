@@ -1,5 +1,8 @@
 package group.zealot.test.redis;
 
+import io.lettuce.core.SetArgs;
+import io.lettuce.core.api.async.RedisAsyncCommands;
+import io.lettuce.core.cluster.api.async.RedisAdvancedClusterAsyncCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -62,6 +65,27 @@ public class RedisUtil {
     public <K, V> ValueOperations<K, V> valueOperations() {
         RedisTemplate<K, V> template = redisTemplate();
         return template.opsForValue();
+    }
+
+    public String set(String keyName, String keyValue, long time) {
+        Object nativeConnection = redisConnection().getNativeConnection();
+        if (nativeConnection instanceof RedisAsyncCommands) {
+            RedisAsyncCommands<Object,Object> commands = (RedisAsyncCommands) nativeConnection;
+            //同步方法执行、setnx禁止异步
+            return commands
+                    .getStatefulConnection()
+                    .sync()
+                    .set(keyName.getBytes(), keyValue.getBytes(), SetArgs.Builder.nx().ex(time));
+
+        }// lettuce连接包下 redis 集群模式setnx
+        if (nativeConnection instanceof RedisAdvancedClusterAsyncCommands) {
+            RedisAdvancedClusterAsyncCommands<Object,Object> clusterAsyncCommands = (RedisAdvancedClusterAsyncCommands) nativeConnection;
+            return clusterAsyncCommands
+                    .getStatefulConnection()
+                    .sync()
+                    .set(keyName.getBytes(), keyValue.getBytes(), SetArgs.Builder.nx().ex(time));
+        }
+        return null;
     }
 
     /**
