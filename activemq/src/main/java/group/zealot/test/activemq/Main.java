@@ -20,7 +20,7 @@ public class Main {
         RedeliveryPolicy redeliveryPolicy = factory.getRedeliveryPolicy();
         redeliveryPolicy.setUseExponentialBackOff(false);//重发时间间隔递增
         redeliveryPolicy.setBackOffMultiplier(1.0);//重发时间间隔倍数增长，需 UseExponentialBackOff 为true
-        redeliveryPolicy.setMaximumRedeliveries(10);//最大重发次数
+        redeliveryPolicy.setMaximumRedeliveries(1);//最大重发次数
         redeliveryPolicy.setMaximumRedeliveryDelay(10000);//最大重发间隔时间
         redeliveryPolicy.setInitialRedeliveryDelay(2000);//初始重发时间间隔
 
