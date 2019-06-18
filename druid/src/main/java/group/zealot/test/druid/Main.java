@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
 @SpringBootApplication
-@RestController
+//@RestController
 public class Main {
 
     /**
@@ -24,11 +28,27 @@ public class Main {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @RequestMapping("/simpleQuary")
-    @ResponseBody
+//    @RequestMapping("/simpleQuary")
+//    @ResponseBody
     public String simpleQuary() {
-        String sql = "SELECT * FROM tb_druid_1 ";
-        jdbcTemplate.execute(sql);
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        for (int i = 0; i < 10000; i++) {
+            String sql = "insert into tb_user (name,age,sex,insert_time) values ('%s',%d,'%s','%s')";
+            sql = String.format(sql, getRandomString(((Double) (10 * Math.random())).intValue()), ((Double) (100 * Math.random())).intValue(), "男", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            jdbcTemplate.execute(sql);
+        }
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         return "success";
+    }
+
+    public static String getRandomString(int length) {
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 }

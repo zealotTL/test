@@ -10,12 +10,12 @@ spring:
       initialSize: 5
       minIdle: 5
       maxActive: 20
-      maxWait: 60000
+      maxWait: 5000
       timeBetweenEvictionRunsMillis: 60000
       minEvictableIdleTimeMillis: 300000
       validationQuery: SELECT 1
       testWhileIdle: true
-      testOnBorrow: false
+      testOnBorrow: true
       testOnReturn: false
 #      filters: stat,wall,log4j
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
