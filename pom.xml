@@ -43,6 +43,7 @@
         <module>socket</module>
         <module>shell</module>
         <module>ssl</module>
+        <module>datasource</module>
     </modules>
 
     <dependencyManagement>
