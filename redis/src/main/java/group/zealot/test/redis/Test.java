@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -20,4 +21,17 @@ public class Test {
         System.out.println("2 set name = zealot");
         System.out.println("3 " + valueOperations.get("name"));
     }
+
+    @org.junit.Test
+    public void test2() {
+        new Thread(() -> {
+            System.out.println(redisUtil.set("abc", "abc", 10000));
+        }).start();
+        new Thread(() -> {
+            System.out.println(redisUtil.set("abc", "abc", 10000));
+        }).start();
+        System.out.println();
+
+    }
+
 }

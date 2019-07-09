@@ -3,19 +3,19 @@ spring:
     active: dev
   datasource:
     druid:
-      url: jdbc:mysql://www.zealot.group:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: zealot
       password: zealot
       initialSize: 5
       minIdle: 5
       maxActive: 20
-      maxWait: 60000
+      maxWait: 5000
       timeBetweenEvictionRunsMillis: 60000
       minEvictableIdleTimeMillis: 300000
       validationQuery: SELECT 1
       testWhileIdle: true
-      testOnBorrow: false
+      testOnBorrow: true
       testOnReturn: false
 #      filters: stat,wall,log4j
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000

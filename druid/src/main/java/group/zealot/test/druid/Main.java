@@ -6,12 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Random;
 
 @SpringBootApplication
-@RestController
 public class Main {
 
     /**
@@ -24,11 +22,15 @@ public class Main {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @RequestMapping("/simpleQuary")
-    @ResponseBody
-    public String simpleQuary() {
-        String sql = "SELECT * FROM tb_druid_1 ";
-        jdbcTemplate.execute(sql);
-        return "success";
+
+    public static String getRandomString(int length) {
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 }
