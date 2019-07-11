@@ -8,7 +8,7 @@
 
     <property name="log_prod_level" value="WARN"/>
     <property name="log_test_level" value="DEBUG"/>
-    <property name="log_dev_level" value="info"/>
+    <property name="log_dev_level" value="DEBUG"/>
     <!-- 生产环境 -->
     <springProfile name="prod">
         <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
