@@ -83,15 +83,12 @@ public class Zealot {
                     .getSocketFactory());
         }
         //验证证书域名不一致的以下请求host可以正常请求服务器获得返回
-        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-            public boolean verify(String hostname, SSLSession paramSSLSession) {
-                if ("证书IP".equals(hostname)) {
+        HttpsURLConnection.setDefaultHostnameVerifier(
+                (String hostname, SSLSession paramSSLSession) -> {
+                    System.out.println(hostname);
                     return true;
-                } else {
-                    return false;
                 }
-            }
-        });
+        );
     }
 
     /**
@@ -138,11 +135,11 @@ public class Zealot {
         // 密码
         String password = "password";
         // 密钥库
-        String keyStorePath = dir + "client.key.p12";
+        String keyStorePath = dir + "client.keystore.p12";
         // 信任库
-        String trustStorePath = dir + "test.keystore";//tomcat.keystore  tomcat.cer
+        String trustStorePath = dir + "client.keystore";//client.keystore(tomcat.cer tomcat.crt 导入到信任库）
         // 本地起的https服务
-        String httpsUrl = "https://localhost:8080/api";
+        String httpsUrl = "https://localhost:8080/";
         // 传输文本
         Zealot.initHttpsURLConnection(password, keyStorePath, trustStorePath);
         String body = "主体消息";
