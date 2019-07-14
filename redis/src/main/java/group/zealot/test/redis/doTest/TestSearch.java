@@ -1,6 +1,8 @@
-package group.zealot.test.redis;
+package group.zealot.test.redis.doTest;
 
 import com.alibaba.fastjson.JSONObject;
+import group.zealot.test.redis.Main;
+import group.zealot.test.redis.RedisUtil;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

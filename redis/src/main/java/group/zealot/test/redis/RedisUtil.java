@@ -96,4 +96,7 @@ public class RedisUtil {
         redisConnection.flushAll();
     }
 
+    public JdkSerializationRedisSerializer getSerializer() {
+        return serializer;
+    }
 }

@@ -1,6 +1,8 @@
-package group.zealot.test.redis;
+package group.zealot.test.redis.doTest;
 
 import com.alibaba.fastjson.JSONObject;
+import group.zealot.test.redis.Main;
+import group.zealot.test.redis.RedisUtil;
 import group.zealot.test.thread.MyThreadPoolManager;
 import org.junit.Before;
 import org.junit.Test;
