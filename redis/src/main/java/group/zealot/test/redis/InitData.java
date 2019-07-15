@@ -3,12 +3,17 @@ package group.zealot.test.redis;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 public abstract class InitData {
     protected Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    protected RedisUtil redisUtil;
 
     protected SimpleDateFormat sdf = new SimpleDateFormat("mmssSSS");
 
@@ -20,6 +25,11 @@ public abstract class InitData {
         key += "iccid" + item.getString("iccid") + "";
         key += "groupName" + item.getString("groupName") + "";
         return key;
+    }
+
+    protected void setCustIds(Set<String> set) {
+        ValueOperations<String, Set<String>> valueOperations = redisUtil.valueOperations();
+        valueOperations.set("CUST_IDs", set);
     }
 
     public JSONObject build(int i) {

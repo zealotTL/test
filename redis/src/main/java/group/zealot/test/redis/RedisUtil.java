@@ -6,10 +6,7 @@ import io.lettuce.core.cluster.api.async.RedisAdvancedClusterAsyncCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -57,6 +54,11 @@ public class RedisUtil {
         return redisTemplate.opsForZSet();
     }
 
+    public <K, V> SetOperations<K, V> setOperations() {
+        RedisTemplate<K, V> redisTemplate = redisTemplate();
+        return redisTemplate.opsForSet();
+    }
+
     public <K, HK, HV> HashOperations<K, HK, HV> hashOperations() {
         RedisTemplate<K, HV> redisTemplate = redisTemplate();
         return redisTemplate.opsForHash();
@@ -70,7 +72,7 @@ public class RedisUtil {
     public String set(String keyName, String keyValue, long time) {
         Object nativeConnection = redisConnection().getNativeConnection();
         if (nativeConnection instanceof RedisAsyncCommands) {
-            RedisAsyncCommands<Object,Object> commands = (RedisAsyncCommands) nativeConnection;
+            RedisAsyncCommands<Object, Object> commands = (RedisAsyncCommands) nativeConnection;
             //同步方法执行、setnx禁止异步
             return commands
                     .getStatefulConnection()
@@ -79,7 +81,7 @@ public class RedisUtil {
 
         }// lettuce连接包下 redis 集群模式setnx
         if (nativeConnection instanceof RedisAdvancedClusterAsyncCommands) {
-            RedisAdvancedClusterAsyncCommands<Object,Object> clusterAsyncCommands = (RedisAdvancedClusterAsyncCommands) nativeConnection;
+            RedisAdvancedClusterAsyncCommands<Object, Object> clusterAsyncCommands = (RedisAdvancedClusterAsyncCommands) nativeConnection;
             return clusterAsyncCommands
                     .getStatefulConnection()
                     .sync()

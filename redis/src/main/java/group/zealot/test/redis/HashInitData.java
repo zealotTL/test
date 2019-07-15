@@ -1,7 +1,6 @@
 package group.zealot.test.redis;
 
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +9,6 @@ import java.util.Map;
 
 @Component
 public class HashInitData extends InitData {
-    @Autowired
-    RedisUtil redisUtil;
     private final int testNum = 1000000;
 
     private Map<String, Map<String, JSONObject>> getMaps() {
@@ -36,7 +33,7 @@ public class HashInitData extends InitData {
             }
             maps.get(custId + "").put(key, item);
         }
-        logger.info(custId + " = ");
+        setCustIds(maps.keySet());
         return maps;
     }
 

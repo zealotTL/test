@@ -13,7 +13,7 @@ public class MyThreadPoolManager {
     private MyThreadPool threadPool;
     
     private MyThreadPoolManager() {
-        this.threadPool = new MyThreadPool(1, 30, 10000);
+        this.threadPool = new MyThreadPool(10, 30, 10000000);
     }
     
     public static MyThreadPoolManager getInstance() {

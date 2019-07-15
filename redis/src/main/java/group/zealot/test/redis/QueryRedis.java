@@ -5,15 +5,11 @@ import group.zealot.test.thread.MyThreadPoolManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -57,7 +53,6 @@ public abstract class QueryRedis {
                 JSONObject item = getFromCursorNext(cursor.next());
                 i.incrementAndGet();
                 if (i.get() >= posStart && i.get() <= posEnd) {
-                    logger.info(item.toJSONString());
                     synchronized (list) {
                         list.add(item);
                     }
@@ -66,11 +61,11 @@ public abstract class QueryRedis {
                 }
             }
         } finally {
-//            try {
-//                cursor.close();
-//            } catch (IOException e) {
-//                logger.error("IOException", e);
-//            }
+            try {
+                cursor.close();
+            } catch (IOException e) {
+                logger.error("IOException", e);
+            }
         }
     }
 
@@ -84,8 +79,8 @@ public abstract class QueryRedis {
         }
         List<String> custIds = vo.getObject("custIds", List.class);
 
-        RedisTemplate<String, Object> redisTemplate = redisUtil.redisTemplate();
-        Set<String> set = redisTemplate.keys("*");
+        ValueOperations<String, Set<String>> valueOperations = redisUtil.valueOperations();
+        Set<String> set = valueOperations.get("CUST_IDs");
         if (custIds != null && !custIds.isEmpty()) {
             set.retainAll(custIds);
         }
@@ -94,10 +89,10 @@ public abstract class QueryRedis {
 
     abstract protected String getSearchKey(JSONObject item);
 
-    abstract protected Cursor doScan( JSONObject voo, String custId);
+    abstract protected Cursor doScan(JSONObject voo, String custId);
 
     protected ScanOptions buildOptions(JSONObject vo) {
-        logger.info(getSearchKey(vo));
+        logger.info("getSearchKey:  " + getSearchKey(vo));
         ScanOptions options = ScanOptions.scanOptions().match(getSearchKey(vo)).count(100).build();
         return options;
     }
