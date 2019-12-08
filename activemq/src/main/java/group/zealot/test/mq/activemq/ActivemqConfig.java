@@ -1,18 +1,17 @@
-package group.zealot.test.activemq;
+package group.zealot.test.mq.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQSession;
 import org.apache.activemq.RedeliveryPolicy;
 import org.messaginghub.pooled.jms.JmsPoolConnectionFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 
-@SpringBootApplication
+@Configuration
 @EnableJms
-public class Main {
+public class ActivemqConfig {
 
     @Bean
     public DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory(JmsPoolConnectionFactory jmsPoolConnectionFactory) {
@@ -29,9 +28,5 @@ public class Main {
         defaultJmsListenerContainerFactory.setSessionAcknowledgeMode(ActiveMQSession.INDIVIDUAL_ACKNOWLEDGE);//客户端调用acknowledge方法手动签收  activemq专用4
         defaultJmsListenerContainerFactory.setPubSubDomain(false);
         return defaultJmsListenerContainerFactory;
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
     }
 }

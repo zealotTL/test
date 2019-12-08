@@ -14,3 +14,8 @@ spring:
       max-connections: 5
       #空闲的连接过期时间，默认为30秒
       idle-timeout: 30s
+rocketmq:
+  namesrv-addr: clw-zealot:59876
+  producer-group: G1
+  consumer-group: G1
+

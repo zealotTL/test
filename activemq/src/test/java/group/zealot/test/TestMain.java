@@ -1,6 +1,8 @@
 package group.zealot.test;
 
-import group.zealot.test.activemq.Main;
+import com.alibaba.fastjson.JSONObject;
+import group.zealot.test.mq.Main;
+import group.zealot.test.mq.rocketmq.RocketMqUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.messaginghub.pooled.jms.JmsPoolConnectionFactory;
@@ -21,24 +23,12 @@ public class TestMain {
     ApplicationContext applicationContext;
     @Autowired
     JmsPoolConnectionFactory jmsPoolConnectionFactory;
-    @Autowired
+    @Autowired(required = false)
     JmsMessagingTemplate template;
+    @Autowired(required = false)
+    RocketMqUtil rocketMqUtil;
 
-    MessageConsumer consumer;
-
-
-    @JmsListener(destination = "test-listener", containerFactory = "defaultJmsListenerContainerFactory", concurrency = "1")
-    public void sdf(TextMessage message, Session session) {
-        try {
-//            message.acknowledge();
-            System.out.println(Thread.currentThread().getId() + " " + message.getText());
-            session.recover();
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @JmsListener(destination = "ActiveMQ.DLQ", containerFactory = "defaultJmsListenerContainerFactory", concurrency = "1")
+    //    @JmsListener(destination = "ActiveMQ.DLQ", containerFactory = "defaultJmsListenerContainerFactory", concurrency = "1")
     public void sdfsd(TextMessage message, Session session) {
         try {
 //            message.acknowledge();
@@ -50,10 +40,9 @@ public class TestMain {
 
     @Test
     public void send() {
-        while (true) {
-            template.convertAndSend("test-listener", "template test message");
-        }
-
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "taolei");
+        rocketMqUtil.send("Test", jsonObject);
     }
 
 }
