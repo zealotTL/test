@@ -37,6 +37,7 @@ public abstract class AbsConsumer {
     public void init() throws MQClientException {
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumerGroup(consumerGroup);
+        consumer.setVipChannelEnabled(false);
         consumer.subscribe(getTopic(), getSubExpression());
         consumer.setConsumeMessageBatchMaxSize(1);
         consumer.registerMessageListener(new MessageListenerConcurrently() {
@@ -48,7 +49,9 @@ public abstract class AbsConsumer {
                         logger.error("mags：" + JSONObject.toJSONString(msgs));
                         logger.error("context：" + JSONObject.toJSONString(context));
                     }
-                    deal(rocketMqUtil.toJSONObject(msgs.get(0)));
+                    JSONObject message = rocketMqUtil.toJSONObject(msgs.get(0));
+                    logger.debug("message：”" + message.toJSONString());
+                    deal(message);
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 } catch (Exception e) {
                     return ConsumeConcurrentlyStatus.RECONSUME_LATER;

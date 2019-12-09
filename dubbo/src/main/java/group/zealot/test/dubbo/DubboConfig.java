@@ -27,7 +27,7 @@ public class DubboConfig {
     @Bean
     public RegistryConfig registryConfig() {
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("zookeeper://127.0.0.1:2181");
+        registryConfig.setAddress("zookeeper://www.zealot.group:2181");
         registryConfig.setClient("curator");
         return registryConfig;
     }

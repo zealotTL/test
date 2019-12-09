@@ -40,8 +40,8 @@ public class RocketMqUtil {
         return send(toMessage(topic, tag, jsonObject));
     }
 
-    protected MessageExt toMessage(String topic, String tag, JSONObject jsonObject) {
-        MessageExt message = new MessageExt();
+    protected Message toMessage(String topic, String tag, JSONObject jsonObject) {
+        Message message = new Message();
         message.setTopic(topic);
         message.setTags(tag);
         message.setBody(jsonObject.toJSONString().getBytes(StandardCharsets.UTF_8));
@@ -49,9 +49,9 @@ public class RocketMqUtil {
         return message;
     }
 
-    protected JSONObject toJSONObject(MessageExt messageExt) {
-        logger.debug("消息：" + messageExt);
-        return JSONObject.parseObject(new String(messageExt.getBody(), StandardCharsets.UTF_8));
+    protected JSONObject toJSONObject(Message message) {
+        logger.debug("消息：" + message);
+        return JSONObject.parseObject(new String(message.getBody(), StandardCharsets.UTF_8));
     }
 
     private boolean send(Message message) {
@@ -66,7 +66,7 @@ public class RocketMqUtil {
 
     private SendResult getSendResult(Message message) {
         try {
-            return producer.send(message);
+            return producer.send(message,3000L);
         } catch (MQClientException e) {
             logger.error("MQClientException", e);
         } catch (RemotingException e) {

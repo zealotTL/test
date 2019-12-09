@@ -19,6 +19,7 @@ public class RocketmqConfig {
         DefaultMQProducer producer = new DefaultMQProducer();
         producer.setNamesrvAddr(namesrvAddr);
         producer.setProducerGroup(producerGroup);
+        producer.setVipChannelEnabled(false);
         producer.start();
         return producer;
     }

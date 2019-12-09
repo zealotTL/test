@@ -47,14 +47,13 @@ public class StringQueryRedis extends QueryRedis {
     }
 
     @Override
-    protected ConvertingCursor doScan(JSONObject voo, String custId) {
+    protected Cursor doScan(JSONObject voo, String custId) {
         voo.put("custId", custId);
         ScanOptions options = buildOptions(voo);
         RedisTemplate redisTemplate = redisUtil.redisTemplate();
         return (ConvertingCursor) redisTemplate.executeWithStickyConnection((RedisConnection connection) -> {
-            return new ConvertingCursor<>(connection.scan(options), (byte[] bytes) -> {
-                return (JSONObject) redisUtil.deserialize(bytes);
-            });
+
+            return connection.scan(options);
         });
     }
 

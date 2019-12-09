@@ -9,15 +9,20 @@ import org.messaginghub.pooled.jms.JmsPoolConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.jms.*;
+import java.util.concurrent.CountDownLatch;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {Main.class})
+@Component
 public class TestMain {
     @Autowired
     ApplicationContext applicationContext;
@@ -27,6 +32,9 @@ public class TestMain {
     JmsMessagingTemplate template;
     @Autowired(required = false)
     RocketMqUtil rocketMqUtil;
+
+    @Autowired(required = false)
+    TestRocketmq testMain;
 
     //    @JmsListener(destination = "ActiveMQ.DLQ", containerFactory = "defaultJmsListenerContainerFactory", concurrency = "1")
     public void sdfsd(TextMessage message, Session session) {
@@ -39,10 +47,16 @@ public class TestMain {
     }
 
     @Test
-    public void send() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "taolei");
-        rocketMqUtil.send("Test", jsonObject);
+    public void send() throws InterruptedException {
+        int i = 0;
+        CountDownLatch latch = new CountDownLatch(1000000);
+        while (i < 100000) {
+            testMain.sendAsync(latch);
+            i++;
+        }
+        latch.await();
+        System.out.println();
     }
+
 
 }
