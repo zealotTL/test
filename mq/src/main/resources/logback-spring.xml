@@ -2,8 +2,10 @@
 <configuration>
     <property name="alert" value="%yellow(at %class.%method \(%file:%line\)) "/>
     <property name="log_path" value="./logs/web"/>
-    <property name="log_file_pattern" value="%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-50.50logger{50} Line:%-3.3L - %msg %n"/>
-    <property name="log_console_pattern" value="%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-15.15thread %cyan(%-60.60logger{60}) Line:%boldRed(%-3.3L) - %black(%msg) %n"/>
+    <property name="log_file_pattern"
+              value="%d{HH:mm:ss.SSS} %-6.6level %-6.6thread %-50.50logger{50} Line:%-3.3L - %msg %n"/>
+    <property name="log_console_pattern"
+              value="%d{HH:mm:ss.SSS} %highlight(%-6.6level) %-15.15thread %cyan(%-60.60logger{60}) Line:%boldRed(%-3.3L) - %black(%msg) %n"/>
     <property name="log_fileNamePattern" value="log.%d{yyyy-MM-dd}.%i.log"/>
 
     <property name="log_prod_level" value="WARN"/>
@@ -21,10 +23,30 @@
                 <level>DEBUG</level>
             </filter>
         </appender>
+        <appender name="RocketmqAppender" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+            <tag>defualt</tag>
+            <topic>Logback</topic>
+            <producerGroup>G-Logback</producerGroup>
+            <nameServerAddress>clw-zealot:59876</nameServerAddress>
+            <layout>
+                <pattern>${log_console_pattern}</pattern>
+            </layout>
+        </appender>
+
+        <appender name="AsyncAppender" class="ch.qos.logback.classic.AsyncAppender">
+            <queueSize>1024</queueSize>
+            <discardingThreshold>80</discardingThreshold>
+            <maxFlushTime>2000</maxFlushTime>
+            <neverBlock>true</neverBlock>
+            <appender-ref ref="RocketmqAppender"/>
+        </appender>
         <logger name="org.springframework" level="INFO"/>
         <logger name="org.springframework.aop.framework.CglibAopProxy" level="ERROR"/>
         <root level="${log_dev_level}">
             <appender-ref ref="ConsoleAppender"/>
+            <appender-ref ref="AsyncAppender"/>
         </root>
+
+
     </springProfile>
 </configuration>

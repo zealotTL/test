@@ -6,6 +6,8 @@ import group.zealot.test.mq.rocketmq.RocketMqUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.messaginghub.pooled.jms.JmsPoolConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +26,7 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootTest(classes = {Main.class})
 @Component
 public class TestMain {
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     ApplicationContext applicationContext;
     @Autowired
@@ -43,6 +46,17 @@ public class TestMain {
             System.out.println(Thread.currentThread().getId() + " " + message.getText());
         } catch (JMSException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void log() {
+        while (true) {
+            logger.trace("这是 trace");
+            logger.debug("这是 debug");
+            logger.info("这是 info");
+            logger.warn("这是 warn");
+            logger.error("这是 error");
         }
     }
 
