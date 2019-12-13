@@ -49,12 +49,36 @@ public class TestMain {
     @Test
     public void send() throws InterruptedException {
         int i = 0;
-        CountDownLatch latch = new CountDownLatch(1000000);
-        while (i < 100000) {
-            testMain.sendAsync(latch);
-            i++;
-        }
-        latch.await();
+//        CountDownLatch latch = new CountDownLatch(1000000);
+//        while (i < 1000000) {
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("name1", "taoleitaoleitaolei");
+//        jsonObject.put("name2", "taoleitaoleitaolei");
+//        jsonObject.put("name3", "taoleitaoleitaolei");
+//        jsonObject.put("name4", "taoleitaoleitaolei");
+//        jsonObject.put("name5", "taoleitaoleitaolei");
+//        jsonObject.put("name6", "taoleitaoleitaolei");
+//        jsonObject.put("name7", "taoleitaoleitaoleitaoleitaoleitaoleitaoleitaoleitaolei");
+//        jsonObject.put("name8", "taoleitaoleitaoleitaoleitaoleitaoleitaoleitaoleitaolei");
+//        jsonObject.put("name9", "taoleitaoleitaoleitaoleitaoleitaoleitaoleitaoleitaolei");
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//        rocketMqUtil.send("Test", jsonObject);
+//            i++;
+//        }
+//        latch.await();
         System.out.println();
     }
 

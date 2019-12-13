@@ -22,7 +22,7 @@ public class TestRocketmq extends AbsConsumer {
 
     @Override
     protected String getTopic(){
-        return "Test2";
+        return "Test";
     }
 
 

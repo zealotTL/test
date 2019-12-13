@@ -32,7 +32,7 @@
     </developers>
 
     <modules>
-        <module>activemq</module>
+        <module>mq</module>
         <module>druid</module>
         <module>thread</module>
         <module>jvm</module>

@@ -10,7 +10,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>test-activemq</artifactId>
+    <artifactId>test-mq</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
