@@ -52,6 +52,12 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>mongodb-plus-spring-boot-starter</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+
         <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>
