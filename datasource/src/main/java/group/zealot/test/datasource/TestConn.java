@@ -21,8 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Future;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Main.class)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Main.class)
 public class TestConn {
     Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired

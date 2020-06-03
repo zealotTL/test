@@ -44,6 +44,7 @@
         <module>shell</module>
         <module>ssl</module>
         <module>datasource</module>
+        <module>es</module>
     </modules>
 
     <dependencyManagement>

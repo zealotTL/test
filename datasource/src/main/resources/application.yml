@@ -33,12 +33,15 @@ spring:
       testOnReturn: false
       #      filters: stat,wall,log4j
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
-  data:
-    mongodb:
-      host: clw-zealot
-      port: 57017
-      database: test
-      option:
-        min-connection-per-host: 5
-        max-connection-per-host: 50
-        threads-allowed-to-block-for-connection-multiplier: 5
+#  data:
+#    mongodb:
+#      host: clw-zealot
+#      port: 57017
+#      database: test
+#      option:
+#        min-connection-per-host: 5
+#        max-connection-per-host: 50
+#        threads-allowed-to-block-for-connection-multiplier: 5
+  elasticsearch:
+    rest:
+      uris: www.zealot.group:9200

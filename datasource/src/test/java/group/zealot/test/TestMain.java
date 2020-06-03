@@ -3,6 +3,11 @@ package group.zealot.test;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.UpdateResult;
 import group.zealot.test.datasource.Main;
+import group.zealot.test.datasource.elasticsearch.BaseElasticService;
+import group.zealot.test.datasource.elasticsearch.EsModel;
+import group.zealot.test.datasource.elasticsearch.EsPage;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,7 +22,10 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 
 @RunWith(SpringRunner.class)
@@ -55,6 +63,20 @@ public class TestMain {
 */
 
         logger.info("over");
+    }
+
+    @Autowired
+    BaseElasticService baseElasticService;
+
+    @Test
+    public void es() {
+        String indexName = "test";
+        String esType = "external";
+        String id;
+        if (!baseElasticService.isExistsIndex(indexName)) {
+            baseElasticService.createIndex(indexName, "仅用于测试");
+
+        }
     }
 
 

@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+  elasticsearch:
+    rest:
+      uris: www.zealot.group:9200
