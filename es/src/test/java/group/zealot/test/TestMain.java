@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import group.zealot.test.datasource.Main;
 import group.zealot.test.datasource.elasticsearch.BaseElasticService;
 import group.zealot.test.datasource.elasticsearch.EsModel;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -30,10 +33,17 @@ public class TestMain {
     public void es() {
         String indexName = "test";
         JSONObject indexSource = new JSONObject();
-        indexSource.put("")
+        JSONObject type = new JSONObject();
+        indexSource.put(BaseElasticService.DEFAULT_TYPE, type);
+        type.put("dynamic",false);
+        JSONObject properties = new JSONObject();
+        type.put("properties",properties);
+        properties.put("id","long");
+        properties.put("age","int");
+        properties.put("name","text");
+        properties.put("date","date");
 
-        String esType = "user";
-        String id;
+
         if (!baseElasticService.isExistsIndex(indexName)) {
             baseElasticService.createIndex(indexName, indexSource.toJSONString());
 
@@ -42,5 +52,9 @@ public class TestMain {
         esModel.setId("1111");
         esModel.setAge(19);
         baseElasticService.insertOrUpdateOne(indexName, esModel);
+
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        List<EsModel> list = baseElasticService.search(indexName, builder, EsModel.class);
+        logger.info(list.size() + "");
     }
 }

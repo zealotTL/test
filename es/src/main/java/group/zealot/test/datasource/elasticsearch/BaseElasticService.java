@@ -14,6 +14,8 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
@@ -36,6 +38,7 @@ import java.util.List;
 @Component
 public class BaseElasticService {
     private Logger logger = LoggerFactory.getLogger(getClass());
+    public static final String DEFAULT_TYPE = "DEFAULT_TYPE";
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 
@@ -57,6 +60,29 @@ public class BaseElasticService {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * 设置分片
+     *
+     * @param request
+     */
+    public void buildSetting(CreateIndexRequest request) {
+        request.settings(Settings.builder().put("index.number_of_shards", 3)
+                .put("index.number_of_replicas", 2));
+    }
+
+    /**
+     * 设置文档
+     */
+    public XContentBuilder buildXContentBuilder() throws IOException {
+        return XContentFactory.jsonBuilder()
+                .startObject()
+                .field("id", 1)
+                .field("title", "ElasticSearch是一个基于Lucene的搜索服务器")
+                .field("content", "它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。")
+                .endObject();
+    }
+
 
     /**
      * 断某个index是否存在
@@ -89,16 +115,6 @@ public class BaseElasticService {
             logger.error("indexName={}", indexName);
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * 设置分片
-     *
-     * @param request
-     */
-    public void buildSetting(CreateIndexRequest request) {
-        request.settings(Settings.builder().put("index.number_of_shards", 3)
-                .put("index.number_of_replicas", 2));
     }
 
     /**
@@ -145,7 +161,7 @@ public class BaseElasticService {
      */
     public <T> void deleteBatch(String indexName, Collection<T> idList) {
         BulkRequest request = new BulkRequest();
-        idList.forEach(item -> request.add(new DeleteRequest(indexName, item.toString())));
+        idList.forEach(item -> request.add(new DeleteRequest(indexName, DEFAULT_TYPE, item.toString())));
         try {
             restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
         } catch (Exception e) {
@@ -194,23 +210,4 @@ public class BaseElasticService {
         }
     }
 
-
-    /**
-     * @param indexName
-     * @param builder
-     */
-    public void deleteByQuery(String indexName, QueryBuilder builder) {
-
-        DeleteByQueryRequest request = new DeleteByQueryRequest(indexName);
-        request.setQuery(builder);
-        //设置批量操作数量,最大为10000
-        request.setBatchSize(10000);
-        request.setConflicts("proceed");
-        try {
-            restHighLevelClient.deleteByQuery(request, RequestOptions.DEFAULT);
-        } catch (Exception e) {
-            logger.error("indexName={} builder={}", indexName, builder);
-            throw new RuntimeException(e);
-        }
-    }
 }
