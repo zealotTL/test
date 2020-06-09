@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import group.zealot.test.datasource.Main;
 import group.zealot.test.datasource.elasticsearch.BaseElasticService;
 import group.zealot.test.datasource.elasticsearch.EsModel;
+import group.zealot.test.datasource.elasticsearch.EsUser;
+import group.zealot.test.datasource.elasticsearch.EsUserService;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,5 +47,21 @@ public class TestMain {
         SearchSourceBuilder builder = new SearchSourceBuilder();
         List<EsModel> list = baseElasticService.search(indexName, builder, EsModel.class);
         logger.info(list.size() + "");
+    }
+
+    @Autowired(required = false)
+    EsUserService esUserService;
+
+    @Test
+    public void esUser() {
+        Iterable iterable = esUserService.findAll();
+        iterable.forEach(item -> logger.info(JSONObject.toJSONString(item)));
+        EsUser vo = new EsUser();
+        vo.setId("12345");
+        vo.setAge(20);
+        vo.setName("陶磊123");
+        esUserService.save(vo);
+        iterable = esUserService.findAll();
+        iterable.forEach(item -> logger.info(JSONObject.toJSONString(item)));
     }
 }
