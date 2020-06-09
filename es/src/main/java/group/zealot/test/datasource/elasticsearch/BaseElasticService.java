@@ -43,6 +43,25 @@ public class BaseElasticService {
     private RestHighLevelClient restHighLevelClient;
 
     /**
+     * @param indexName 索引名称
+     * @param builder   索引描述
+     */
+    public void createIndex(String indexName, XContentBuilder builder) {
+        try {
+            CreateIndexRequest request = new CreateIndexRequest(indexName);
+            buildSetting(request);
+            request.mapping(builder);
+            CreateIndexResponse res = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
+            if (!res.isAcknowledged()) {
+                throw new RuntimeException("初始化失败");
+            }
+        } catch (Exception e) {
+            logger.error("indexName={} indexSource={}", indexName, builder);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * @param indexName   索引名称
      * @param indexSource 索引描述
      */
@@ -70,19 +89,6 @@ public class BaseElasticService {
         request.settings(Settings.builder().put("index.number_of_shards", 3)
                 .put("index.number_of_replicas", 2));
     }
-
-    /**
-     * 设置文档
-     */
-    public XContentBuilder buildXContentBuilder() throws IOException {
-        return XContentFactory.jsonBuilder()
-                .startObject()
-                .field("id", 1)
-                .field("title", "ElasticSearch是一个基于Lucene的搜索服务器")
-                .field("content", "它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。")
-                .endObject();
-    }
-
 
     /**
      * 断某个index是否存在

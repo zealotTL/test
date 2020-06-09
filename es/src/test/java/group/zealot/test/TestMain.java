@@ -32,20 +32,9 @@ public class TestMain {
     @Test
     public void es() {
         String indexName = "test";
-        JSONObject indexSource = new JSONObject();
-        JSONObject type = new JSONObject();
-        indexSource.put(BaseElasticService.DEFAULT_TYPE, type);
-        type.put("dynamic",false);
-        JSONObject properties = new JSONObject();
-        type.put("properties",properties);
-        properties.put("id","long");
-        properties.put("age","int");
-        properties.put("name","text");
-        properties.put("date","date");
-
 
         if (!baseElasticService.isExistsIndex(indexName)) {
-            baseElasticService.createIndex(indexName, indexSource.toJSONString());
+            baseElasticService.createIndex(indexName, EsModel.generateBuilder());
 
         }
         EsModel esModel = new EsModel();
